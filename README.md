@@ -1,1 +1,1 @@
-# Empréstimo BMG - Site atualizado
+# Empréstimo BMG - Site atualizado com Root Directory correto
