@@ -14,13 +14,14 @@ import {
   Youtube,
   AlertTriangle,
   X,
-  Menu
+  Menu,
+  MessageCircle
 } from 'lucide-react'
 import LoanApplicationForm from './components/LoanApplicationForm.jsx'
 import './App.css'
 
 function App() {
-  const [loanAmount, setLoanAmount] = useState([2000])
+  const [loanAmount, setLoanAmount] = useState([5000])
   const [installments, setInstallments] = useState(12)
   const [showContactModal, setShowContactModal] = useState(false)
   const [showCookieNotice, setShowCookieNotice] = useState(true)
@@ -28,10 +29,10 @@ function App() {
   const [showLoanForm, setShowLoanForm] = useState(false)
 
   const calculateMonthlyPayment = () => {
-    // Simulação simples de cálculo de parcela
+    // Simulação de cálculo de parcela com taxa de juros do BMG
     const amount = loanAmount[0]
     const months = installments
-    const interestRate = 0.15 // 15% ao ano
+    const interestRate = 0.16 // 16% ao ano (taxa aproximada BMG)
     const monthlyRate = interestRate / 12
     const payment = (amount * monthlyRate * Math.pow(1 + monthlyRate, months)) / 
                    (Math.pow(1 + monthlyRate, months) - 1)
@@ -42,6 +43,10 @@ function App() {
     setShowLoanForm(true)
   }
 
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/5511992279097', '_blank')
+  }
+
   const testimonials = [
     {
       name: "Maria S.",
@@ -49,11 +54,11 @@ function App() {
     },
     {
       name: "Edison A.",
-      text: "Funciona e funciona muito bem... Já estou no segundo empréstimo com a Simplic. Estão de parabéns, uma financeira sem burocracia..."
+      text: "Funciona e funciona muito bem... Já estou no segundo empréstimo com o BMG. Estão de parabéns, uma financeira sem burocracia..."
     },
     {
       name: "Luísa R.",
-      text: "Estou muito feliz e satisfeita com a Simplic. Já tive meu empréstimo liberado duas vezes, sem burocracia e o dinheiro cai no mesmo dia."
+      text: "Estou muito feliz e satisfeita com o BMG. Já tive meu empréstimo liberado duas vezes, sem burocracia e o dinheiro cai no mesmo dia."
     },
     {
       name: "Sandra S.",
@@ -61,7 +66,7 @@ function App() {
     },
     {
       name: "Lenne O.",
-      text: "Funciona mesmo, comigo foi super rápido e fácil em menos de 24 horas o dinheiro tava na conta... Obrigada simplic."
+      text: "Funciona mesmo, comigo foi super rápido e fácil em menos de 24 horas o dinheiro tava na conta... Obrigada BMG."
     },
     {
       name: "Ivcosta F.",
@@ -71,9 +76,20 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* WhatsApp Floating Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          onClick={handleWhatsAppClick}
+          className="bg-green-500 hover:bg-green-600 text-white rounded-full w-16 h-16 shadow-lg flex items-center justify-center"
+          title="Fale conosco no WhatsApp"
+        >
+          <MessageCircle className="w-8 h-8" />
+        </Button>
+      </div>
+
       {/* Cookie Notice */}
       {showCookieNotice && (
-        <div className="fixed bottom-0 left-0 right-0 bg-green-600 text-white p-4 z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-orange-600 text-white p-4 z-40" style={{backgroundColor: '#F26322'}}>
           <div className="container mx-auto flex items-center justify-between">
             <p className="text-sm">
               Ao acessar nosso site, você concorda com o uso de cookies para melhorar a sua experiência, bem como para analisar e personalizar conteúdos e anúncios. Leia nossa{' '}
@@ -140,7 +156,7 @@ function App() {
                     maxLength="350"
                   />
                 </div>
-                <Button className="w-full bg-green-600 hover:bg-green-700">
+                <Button className="w-full" style={{backgroundColor: '#F26322'}}>
                   Enviar Mensagem
                 </Button>
               </div>
@@ -150,7 +166,7 @@ function App() {
       )}
 
       {/* Alert Bar */}
-      <div className="bg-green-600 text-white py-2 px-4">
+      <div className="text-white py-2 px-4" style={{backgroundColor: '#F26322'}}>
         <div className="container mx-auto flex items-center justify-center text-sm">
           <AlertTriangle className="w-4 h-4 mr-2" />
           <span><strong>Atenção!</strong> Nenhum valor é cobrado antecipadamente pelo seu empréstimo pessoal.</span>
@@ -163,28 +179,29 @@ function App() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
-              <div className="text-2xl font-bold text-green-600">
-                Simplic
+              <div className="text-2xl font-bold" style={{color: '#F26322'}}>
+                Empréstimo BMG
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-6">
-              <a href="#como-funciona" className="text-gray-700 hover:text-green-600 transition-colors">
+              <a href="#como-funciona" className="text-gray-700 transition-colors" style={{'&:hover': {color: '#F26322'}}}>
                 COMO FUNCIONA
               </a>
-              <a href="#quem-somos" className="text-gray-700 hover:text-green-600 transition-colors">
+              <a href="#quem-somos" className="text-gray-700 transition-colors" style={{'&:hover': {color: '#F26322'}}}>
                 QUEM SOMOS
               </a>
-              <a href="#ajuda" className="text-gray-700 hover:text-green-600 transition-colors">
+              <a href="#ajuda" className="text-gray-700 transition-colors" style={{'&:hover': {color: '#F26322'}}}>
                 AJUDA
               </a>
-              <a href="#blog" className="text-gray-700 hover:text-green-600 transition-colors">
+              <a href="#blog" className="text-gray-700 transition-colors" style={{'&:hover': {color: '#F26322'}}}>
                 BLOG
               </a>
               <Button 
                 variant="outline" 
-                className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
+                className="text-white hover:text-white"
+                style={{borderColor: '#F26322', backgroundColor: '#F26322'}}
               >
                 ENTRAR
               </Button>
@@ -203,21 +220,22 @@ function App() {
           {mobileMenuOpen && (
             <nav className="md:hidden mt-4 pb-4 border-t pt-4">
               <div className="flex flex-col space-y-3">
-                <a href="#como-funciona" className="text-gray-700 hover:text-green-600 transition-colors">
+                <a href="#como-funciona" className="text-gray-700 transition-colors">
                   COMO FUNCIONA
                 </a>
-                <a href="#quem-somos" className="text-gray-700 hover:text-green-600 transition-colors">
+                <a href="#quem-somos" className="text-gray-700 transition-colors">
                   QUEM SOMOS
                 </a>
-                <a href="#ajuda" className="text-gray-700 hover:text-green-600 transition-colors">
+                <a href="#ajuda" className="text-gray-700 transition-colors">
                   AJUDA
                 </a>
-                <a href="#blog" className="text-gray-700 hover:text-green-600 transition-colors">
+                <a href="#blog" className="text-gray-700 transition-colors">
                   BLOG
                 </a>
                 <Button 
                   variant="outline" 
-                  className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white w-fit"
+                  className="text-white w-fit"
+                  style={{borderColor: '#F26322', backgroundColor: '#F26322'}}
                 >
                   ENTRAR
                 </Button>
@@ -233,8 +251,12 @@ function App() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Left side - Image */}
             <div className="flex justify-center">
-              <div className="w-80 h-80 bg-gray-300 rounded-lg flex items-center justify-center">
-                <span className="text-gray-500">Imagem da pessoa sorrindo</span>
+              <div className="w-80 h-80 rounded-lg overflow-hidden">
+                <img 
+                  src="/emprestimo-bmg.png" 
+                  alt="Empréstimo BMG - Certo na hora que você precisa"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
@@ -249,37 +271,60 @@ function App() {
                 <div>
                   <h3 className="text-lg font-semibold mb-4">1. Quer um empréstimo pessoal de quanto?</h3>
                   <div className="text-center mb-4">
-                    <span className="text-2xl font-bold text-green-600">
+                    <span className="text-2xl font-bold" style={{color: '#F26322'}}>
                       R$ {loanAmount[0].toLocaleString('pt-BR')}
                     </span>
                   </div>
                   <Slider
                     value={loanAmount}
                     onValueChange={setLoanAmount}
-                    max={3500}
-                    min={500}
-                    step={100}
+                    max={300000}
+                    min={5000}
+                    step={5000}
                     className="w-full"
                   />
                   <div className="flex justify-between text-sm text-gray-500 mt-2">
-                    <span>R$ 500</span>
-                    <span>R$ 3500</span>
+                    <span>R$ 5.000</span>
+                    <span>R$ 300.000</span>
                   </div>
                 </div>
 
                 {/* Installments */}
                 <div>
                   <h3 className="text-lg font-semibold mb-4">2. Quer pagar em quantas parcelas?</h3>
-                  <div className="grid grid-cols-4 gap-2">
-                    {[3, 6, 9, 12].map((months) => (
+                  <div className="grid grid-cols-4 gap-2 mb-4">
+                    {[12, 24, 36, 48].map((months) => (
                       <button
                         key={months}
                         onClick={() => setInstallments(months)}
                         className={`p-3 border-2 rounded-lg text-center font-semibold transition-colors ${
                           installments === months
-                            ? 'border-green-600 bg-green-600 text-white'
-                            : 'border-gray-300 hover:border-green-600'
+                            ? 'text-white'
+                            : 'border-gray-300'
                         }`}
+                        style={installments === months ? {
+                          borderColor: '#F26322',
+                          backgroundColor: '#F26322'
+                        } : {}}
+                      >
+                        {months}X
+                      </button>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[60, 72, 96, 120].map((months) => (
+                      <button
+                        key={months}
+                        onClick={() => setInstallments(months)}
+                        className={`p-3 border-2 rounded-lg text-center font-semibold transition-colors ${
+                          installments === months
+                            ? 'text-white'
+                            : 'border-gray-300'
+                        }`}
+                        style={installments === months ? {
+                          borderColor: '#F26322',
+                          backgroundColor: '#F26322'
+                        } : {}}
                       >
                         {months}X
                       </button>
@@ -308,10 +353,10 @@ function App() {
       </section>
 
       {/* How it Works Section */}
-      <section id="como-funciona" className="bg-green-600 py-16">
+      <section id="como-funciona" className="py-16" style={{backgroundColor: '#F26322'}}>
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-white mb-12">
-            Como funciona o empréstimo Simplic?
+            Como funciona o empréstimo BMG?
           </h2>
           
           <div className="grid md:grid-cols-4 gap-8">
@@ -338,11 +383,11 @@ function App() {
               }
             ].map((item, index) => (
               <div key={index} className="text-center text-white">
-                <div className="w-16 h-16 bg-white text-green-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4" style={{color: '#F26322'}}>
                   {item.step}
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-green-100">{item.description}</p>
+                <p className="text-orange-100">{item.description}</p>
               </div>
             ))}
           </div>
@@ -361,7 +406,7 @@ function App() {
               <Card key={index} className="p-6">
                 <CardContent className="p-0">
                   <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
-                  <p className="font-semibold text-green-600">- {testimonial.name}</p>
+                  <p className="font-semibold" style={{color: '#F26322'}}>- {testimonial.name}</p>
                 </CardContent>
               </Card>
             ))}
@@ -370,20 +415,24 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-green-600 text-white py-12">
+      <footer className="text-white py-12" style={{backgroundColor: '#190863'}}>
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             {/* Company Info */}
             <div>
-              <div className="text-2xl font-bold mb-4">Simplic</div>
-              <p className="text-green-100 text-sm mb-4">
-                Somos um correspondente bancário. Simplic é uma empresa fundada em 2014 em São Paulo com o objetivo de proporcionar acesso a crédito pessoal online de forma flexível, inovadora e descomplicada.
+              <div className="text-2xl font-bold mb-4">Empréstimo BMG</div>
+              <p className="text-purple-100 text-sm mb-4">
+                Somos um correspondente bancário. BMG é uma empresa fundada em 1929 com o objetivo de proporcionar acesso a crédito pessoal online de forma flexível, inovadora e descomplicada.
               </p>
               <div className="flex space-x-4">
-                <Facebook className="w-5 h-5 cursor-pointer hover:text-green-200" />
-                <Twitter className="w-5 h-5 cursor-pointer hover:text-green-200" />
-                <Instagram className="w-5 h-5 cursor-pointer hover:text-green-200" />
-                <Youtube className="w-5 h-5 cursor-pointer hover:text-green-200" />
+                <a href="https://www.facebook.com/bancobmg" target="_blank" rel="noopener noreferrer">
+                  <Facebook className="w-5 h-5 cursor-pointer hover:text-purple-200" />
+                </a>
+                <a href="https://www.youtube.com/channel/UCHWv3vX22IPFpBlSARDcoZg" target="_blank" rel="noopener noreferrer">
+                  <Youtube className="w-5 h-5 cursor-pointer hover:text-purple-200" />
+                </a>
+                <Instagram className="w-5 h-5 cursor-pointer hover:text-purple-200" />
+                <Twitter className="w-5 h-5 cursor-pointer hover:text-purple-200" />
               </div>
             </div>
 
@@ -391,13 +440,11 @@ function App() {
             <div>
               <h4 className="font-semibold mb-4">NAVEGAÇÃO</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-green-100 hover:text-white">Quem Somos</a></li>
-                <li><a href="#" className="text-green-100 hover:text-white">Como Funciona</a></li>
-                <li><a href="#" className="text-green-100 hover:text-white">Ajuda</a></li>
-                <li><a href="#" className="text-green-100 hover:text-white">Empréstimo Pessoal</a></li>
-                <li><a href="#" className="text-green-100 hover:text-white">Mapa Do Site</a></li>
-                <li><a href="#" className="text-green-100 hover:text-white">Blog</a></li>
-                <li><a href="#" className="text-green-100 hover:text-white">Termos e condições</a></li>
+                <li><a href="#" className="text-purple-100 hover:text-white">Quem Somos</a></li>
+                <li><a href="#" className="text-purple-100 hover:text-white">Como Funciona</a></li>
+                <li><a href="#" className="text-purple-100 hover:text-white">Ajuda</a></li>
+                <li><a href="#" className="text-purple-100 hover:text-white">Empréstimo Pessoal</a></li>
+                <li><a href="#" className="text-purple-100 hover:text-white">Mapa Do Site</a></li>
               </ul>
             </div>
 
@@ -407,24 +454,25 @@ function App() {
               <div className="space-y-3 text-sm">
                 <div className="flex items-center">
                   <Phone className="w-4 h-4 mr-2" />
-                  <span>WhatsApp: (11) 3335-2979</span>
+                  <span>WhatsApp: (11) 99227-9097</span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="w-4 h-4 mr-2" />
-                  <span>Capitais e regiões metropolitanas: 3004-7242</span>
+                  <span>Capitais e regiões metropolitanas: 4002-7007</span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="w-4 h-4 mr-2" />
-                  <span>Demais localidades: 0800-200-7242</span>
+                  <span>Demais localidades: 0800-770-1790</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="w-4 h-4 mr-2" />
-                  <span>E-mail: contato@simplic.com.br</span>
+                  <span>E-mail: contato@bancobmg.com.br</span>
                 </div>
                 <Button 
                   onClick={() => setShowContactModal(true)}
                   variant="outline" 
-                  className="mt-4 border-white text-white hover:bg-white hover:text-green-600"
+                  className="mt-4 border-white text-white hover:bg-white"
+                  style={{'&:hover': {color: '#190863'}}}
                 >
                   <MapPin className="w-4 h-4 mr-2" />
                   TIRE SUAS DÚVIDAS
@@ -435,27 +483,27 @@ function App() {
             {/* Additional Info */}
             <div>
               <div className="bg-white text-black p-4 rounded-lg mb-4">
-                <div className="text-xs">MEMBRO ASSOCIADO</div>
-                <div className="font-bold">ABCD</div>
+                <div className="text-xs">BANCO BMG</div>
+                <div className="font-bold">CNPJ: 61.186.680/0001-74</div>
               </div>
-              <p className="text-xs text-green-100">
-                Somos membros da ABCD e seguimos as orientações de Conduta do Código de Ética e Autorregulação
+              <p className="text-xs text-purple-100">
+                Banco BMG S.A. - Instituição financeira autorizada pelo Banco Central do Brasil
               </p>
             </div>
           </div>
 
           {/* Bottom Footer */}
-          <div className="border-t border-green-500 mt-8 pt-8">
-            <div className="text-xs text-green-100 space-y-2">
+          <div className="border-t border-purple-500 mt-8 pt-8">
+            <div className="text-xs text-purple-100 space-y-2">
               <p>
-                Simplic.com.br pertence e é operado pela Lendico Correspondente Bancário Ltda. ("Simplic"), uma sociedade limitada registrada sob o CNPJ/MF 17.103.297/0001-13, com sede à Avenida Engenheiro Luiz Carlos Berrini, 1748 – 22° andar - suite 2203 – Cidade Monções, Município de São Paulo, Estado de São Paulo, CEP 04571-000. A Simplic não é uma instituição financeira. Somos um correspondente bancário do Banco Afinz S/A Banco Múltiplo ("Afinz"), antiga Sorocred) registrado sob o CNPJ/MF 04.814.563/0001-74 e possuímos uma plataforma online que facilita o acesso de clientes a produtos e serviços oferecidos por instituições financeiras parceiras.
+                Empréstimo BMG pertence e é operado pelo Banco BMG S.A., uma instituição financeira registrada sob o CNPJ/MF 61.186.680/0001-74, com sede à Av. Presidente Juscelino Kubitschek, 1830 Torre 2 - 10º andar - Vila Nova Conceição CEP 04543-900 - São Paulo/SP. O Banco BMG é uma instituição financeira autorizada pelo Banco Central do Brasil e oferece produtos e serviços financeiros com total transparência e segurança.
               </p>
               <p>
-                A taxa de juros praticada no produto de crédito pessoal pode variar de 15,80% a 17,90% a.m. (481,44% a 621,38% a.a.). O Simplic tem o compromisso de total transparência com nossos clientes. Antes de iniciar o preenchimento de uma proposta, será exibido de forma clara: a taxa de juros utilizada, tarifas aplicáveis, impostos (IOF) e o custo efetivo total (CET). Nossa central de atendimento está disponível para esclarecimento de dúvidas sobre quaisquer dos valores apresentados.
+                A taxa de juros praticada no produto de crédito pessoal pode variar de acordo com o perfil do cliente e análise de crédito. O BMG tem o compromisso de total transparência com nossos clientes. Antes de iniciar o preenchimento de uma proposta, será exibido de forma clara: a taxa de juros utilizada, tarifas aplicáveis, impostos (IOF) e o custo efetivo total (CET). Nossa central de atendimento está disponível para esclarecimento de dúvidas sobre quaisquer dos valores apresentados.
               </p>
               <div className="flex flex-wrap gap-4 mt-4">
-                <a href="#" className="hover:text-white">Privacy Policy</a>
-                <a href="#" className="hover:text-white">Terms of Service</a>
+                <a href="#" className="hover:text-white">Política de Privacidade</a>
+                <a href="#" className="hover:text-white">Termos de Serviço</a>
                 <a href="#" className="hover:text-white">Saiba mais +</a>
               </div>
             </div>
